@@ -1,8 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:mynote_app/pages/allPages.dart';
-import 'package:mynote_app/pages/home_page.dart';
-import 'package:mynote_app/splash/splash.dart';
+
+
+
+
+import 'exporting_libs/exporting_libs.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,10 +30,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SplashPage(),
+      home: !Auth.isLoggedin() ? AuthPage() :SplashPage(),
       routes: {
         allPages.id:(context) => allPages(),
         HomePage.id:(context) => HomePage(),
+        SplashPage.id:(context) => SplashPage(),
+        ProfilePage.id:(context) => ProfilePage(),
+        AuthPage.id:(context) => AuthPage(),
+        SignIn.id:(context) => SignIn(),
       },
     );
   }

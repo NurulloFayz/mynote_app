@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'home_page.dart';
+import '../exporting_libs/exporting_libs.dart';
 
 class allPages extends StatefulWidget {
   static const String id = 'allpages';
@@ -31,8 +29,27 @@ class _allPagesState extends State<allPages> {
           });
         },
         children: [
-          HomePage()
+          HomePage(),
+          ProfilePage(),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+        items: [
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.home_filled,color: Colors.indigo,),
+              icon: Icon(Icons.home_filled,color: Colors.black,),label: ''),
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.person,color: Colors.indigo,),
+              icon: Icon(Icons.person,color: Colors.black,),label: ''),
+        ],
+        currentIndex: selected,
+        onTap: (int index){
+          setState(() {
+            selected  = index;
+            controller?.animateToPage(index, duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+          });
+        },
       ),
     );
   }

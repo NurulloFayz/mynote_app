@@ -1,7 +1,6 @@
-import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:mynote_app/pages/allPages.dart';
+
+import '../exporting_libs/exporting_libs.dart';
 
 class SplashPage extends StatefulWidget {
   static const String id = 'splash';

@@ -1,10 +1,4 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mynote_app/firestore/class_firestore.dart';
-import 'package:mynote_app/pages/create_page.dart';
-import 'package:mynote_app/pages/text_page.dart';
+import '../exporting_libs/exporting_libs.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'homepage';
@@ -15,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Firestore firestore = Firestore();
+   final Firestore firestore = Firestore();
   Future<void> delete(String documentId) async {
     var documentReference = FirebaseFirestore.instance.collection('notes').doc(documentId);
     await documentReference.delete();
@@ -32,29 +26,41 @@ class _HomePageState extends State<HomePage> {
               Text('Notes',style: GoogleFonts.cuprum(fontSize: MediaQuery.of(context).size.height/15),),
             ],
           ),
-          SizedBox(height: MediaQuery.of(context).size.height/20,),
+          SizedBox(height: MediaQuery.of(context).size.height/30,),
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
+            child:StreamBuilder<QuerySnapshot>(
               stream: firestore.getData(),
-              builder: (context,snapshot){
-                if(snapshot.hasData){
-                       return Column(
-                             children: snapshot.data!.docs.map((note)=>allNotes((){
-                               Navigator.push(context,MaterialPageRoute(builder: (context) => TextPage(note)));
-                             },note)).
-                               toList()
-                       );
-
-                   //   Column(
-                   //       children: snapshot.data!.docs.map((note)=>allNotes((){
-                   //         Navigator.push(context,MaterialPageRoute(builder: (context) => TextPage(note)));
-                   //       },note)).
-                   //         toList()
-                   // );
-              };
-                return Text('no notes yet');
-            }
-          ))
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // Loading indicator or placeholder while waiting for data
+                  return Text('');
+                } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  // No data case
+                  return Center(
+                    child:Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('images/wirte.png',height: MediaQuery.of(context).size.height/5,),
+                        SizedBox(height: MediaQuery.of(context).size.height/30,),
+                        Text('No notes',style: GoogleFonts.cuprum(
+                          fontSize: MediaQuery.of(context).size.height/30,
+                          color: Colors.indigo,fontWeight: FontWeight.bold
+                        ),)
+                      ],
+                    )
+                  );
+                } else {
+                  return Column(
+                    children: snapshot.data!.docs.map((note) => allNotes(() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TextPage(note)));
+                    }, note)).toList(),
+                  );
+                }
+              },
+            )
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -146,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                         topRight: Radius.circular(20)
                       )
                     ) ,
-                      child: Icon(Icons.delete_rounded,color: Colors.black,),
+                      child: Icon(Icons.delete_rounded,)
 
                   ),
                 ),

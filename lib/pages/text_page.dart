@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import '../exporting_libs/exporting_libs.dart';
 
 class TextPage extends StatefulWidget {
   static const String id = 'textpage';

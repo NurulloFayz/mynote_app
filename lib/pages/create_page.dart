@@ -1,10 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mynote_app/firestore/class_firestore.dart';
-
-import '../configs/toast.dart';
+import '../exporting_libs/exporting_libs.dart';
 
 class CreatePage extends StatefulWidget {
   static const String id = 'createPage';
